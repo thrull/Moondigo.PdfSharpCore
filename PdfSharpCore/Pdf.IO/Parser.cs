@@ -1216,12 +1216,13 @@ namespace PdfSharpCore.Pdf.IO
                 }
                 catch (PdfReaderException ex)
                 {
+                    // try to find xref symbol around end of the file
                     if (symbol == Symbol.Integer && accuracy == PdfReadAccuracy.Lazy)
                     {
-                        if (symbol == Symbol.Integer && accuracy == PdfReadAccuracy.Lazy)
+                        int idx;
+                        var length = _lexer.PdfLength;
+                        if (length > 1030)
                         {
-                            int idx;
-                            var length = _lexer.PdfLength;
                             // For some broken files we read 1 kiB - in most cases we find "xref" in that range.
                             string xref = _lexer.ReadRawString(length - 1031, 1030);
                             idx = xref.IndexOf("xref", StringComparison.Ordinal);
