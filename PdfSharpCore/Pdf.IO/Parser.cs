@@ -1221,12 +1221,12 @@ namespace PdfSharpCore.Pdf.IO
                     {
                         int idx;
                         var length = _lexer.PdfLength;
-                        if (length > 1030)
+                        if (length > 2060)
                         {
                             // For some broken files we read 1 kiB - in most cases we find "xref" in that range.
-                            string xref = _lexer.ReadRawString(length - 1031, 1030);
+                            string xref = _lexer.ReadRawString(length - 2061, 2060);
                             idx = xref.IndexOf("xref", StringComparison.Ordinal);
-                            _lexer.Position = length - 1031 + idx;
+                            _lexer.Position = length - 2061 + idx;
 
                             symbol = ScanNextToken();
                             if (symbol == Symbol.XRef)
