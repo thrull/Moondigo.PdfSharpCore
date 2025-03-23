@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PdfSharpCore\PdfSharpCore.csproj" />
+    <ProjectReference Include="..\PdfSharpCore\Moondigo.PdfSharpCore.csproj" />
 	<TrimmerRootAssembly Include="PdfSharpCore" />
   </ItemGroup>
 

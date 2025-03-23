@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29911.84
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35521.163 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PdfSharpCore", "PdfSharpCore\PdfSharpCore.csproj", "{4005DEBC-75F8-48DA-BBCC-353E17872B3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moondigo.PdfSharpCore", "PdfSharpCore\Moondigo.PdfSharpCore.csproj", "{4005DEBC-75F8-48DA-BBCC-353E17872B3E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PdfSharpCore.Charting", "PdfSharpCore.Charting\PdfSharpCore.Charting.csproj", "{F29A5C30-44F9-4BED-8805-21889418DA94}"
 EndProject

@@ -29,7 +29,7 @@ MigraDocCore.Rendering was ported from MigraDoc version 1.32</Description>
   <ItemGroup>
     <ProjectReference Include="..\MigraDocCore.DocumentObjectModel\MigraDocCore.DocumentObjectModel.csproj" />
     <ProjectReference Include="..\PdfSharpCore.Charting\PdfSharpCore.Charting.csproj" />
-    <ProjectReference Include="..\PdfSharpCore\PdfSharpCore.csproj" />
+    <ProjectReference Include="..\PdfSharpCore\Moondigo.PdfSharpCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>
