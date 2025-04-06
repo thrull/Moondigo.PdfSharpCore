@@ -39,6 +39,7 @@ using PdfSharpCore.Pdf.Internal;
 using PdfSharpCore.Pdf.IO;
 using PdfSharpCore.Pdf.AcroForms;
 using PdfSharpCore.Pdf.Security;
+using PdfSharpCore.Pdf.Signature;
 
 // ReSharper disable ConvertPropertyToExpressionBody
 
@@ -833,7 +834,27 @@ namespace PdfSharpCore.Pdf
                 img.XObjects.Elements[img.Item.Key] = mapMd5ToPdfItem[md5];
             }
         }
-        
+
+
+        /// <summary>
+        /// Returns a value indicating that signatures of PDF documents exist
+        /// </summary>
+        public bool IsSigned
+        {
+            get { return (_signatures != null || (_signatures != null && _signatures.Count != 0)); }
+        }
+
+        public void AddSignature(PdfSignature signature)
+        {
+            if (_signatures == null)
+                _signatures = new List<PdfSignature>();
+            _signatures.Add(signature);
+        }
+
+        public List<PdfSignature> Signatures { get { return _signatures; } }
+
+        internal List<PdfSignature> _signatures = null;
+
         internal class ImageInfo
         {
             public PdfDictionary XObjects { get; }
