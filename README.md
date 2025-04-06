@@ -8,7 +8,11 @@
 Additionally MigraDoc has been ported as well (from version 1.32).
 Image support has been implemented with [SixLabors.ImageSharp](https://github.com/JimBobSquarePants/ImageSharp/) and Fonts support with [SixLabors.Fonts](https://github.com/SixLabors/Fonts).
 
-**Original** project by ststeiger -> https://github.com/ststeiger/PdfSharpCore. This fork is created to introduce some lesser "accuracy level" (Pdf.IO.enums.PdfReadAccuracy.Lazy - for opening some broken PDFs. Final solution might be pushed to original branch.
+**Original** project by ststeiger -> https://github.com/ststeiger/PdfSharpCore. 
+
+This fork added:
+ - lesser "accuracy level" (Pdf.IO.enums.PdfReadAccuracy.Lazy - for opening some broken PDFs. Final solution might be pushed to original branch.
+ - added preliminary support for PDF Signatures validation (PdfDocument.IsSigned, PdfDocument.Signatures)
 
 ## Table of Contents
 
