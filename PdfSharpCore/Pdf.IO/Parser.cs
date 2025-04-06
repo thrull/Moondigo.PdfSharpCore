@@ -1433,6 +1433,20 @@ namespace PdfSharpCore.Pdf.IO
         }
 
         /// <summary>
+        /// Reads the signed data from pdf document for signature verification.
+        /// </summary>
+        internal byte[] ReadSignedData(int start1, int lenght1, int start2, int lenght2)
+        {
+            _lexer.Position = start1;
+            string chunk1 = _lexer.ReadRawString(start1, lenght1);
+            _lexer.Position = start2;
+            string chunk2 = _lexer.ReadRawString(start2, lenght2);
+
+            byte[] signedData = PdfEncoders.RawEncoding.GetBytes(chunk1 + chunk2);
+            return signedData;
+        }
+
+        /// <summary>
         /// Parses a PDF date string.
         /// </summary>
         /// <remarks>

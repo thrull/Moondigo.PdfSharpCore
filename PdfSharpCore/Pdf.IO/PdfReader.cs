@@ -37,6 +37,7 @@ using PdfSharpCore.Pdf.Security;
 using PdfSharpCore.Pdf.Internal;
 using PdfSharpCore.Internal;
 using PdfSharpCore.Pdf.IO.enums;
+using PdfSharpCore.Pdf.Signature;
 
 namespace PdfSharpCore.Pdf.IO
 {
@@ -529,6 +530,15 @@ namespace PdfSharpCore.Pdf.IO
                             Debug.Assert(pdfObject.Reference == iref);
                             pdfObject.Reference = iref;
                             Debug.Assert(pdfObject.Reference.Value != null, "Something went wrong.");
+
+                            // check if signature present
+                            if (pdfObject is PdfDictionary dict)
+                            {
+                                if (dict.Elements.ContainsKey("/Type") && dict.Elements["/Type"].ToString() == "/Sig")
+                                {
+                                    PdfSignatureValidator.AddAndValidateSignature(dict, document, parser);
+                                }
+                            }
                         }
                         catch (PositionNotFoundException ex)
                         {
