@@ -27,16 +27,17 @@
 // DEALINGS IN THE SOFTWARE.
 #endregion
 
+using PdfSharpCore.Exceptions;
+using PdfSharpCore.Internal;
+using PdfSharpCore.Pdf.Advanced;
+using PdfSharpCore.Pdf.Content;
+using PdfSharpCore.Pdf.Internal;
+using PdfSharpCore.Pdf.IO.enums;
 using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using PdfSharpCore.Exceptions;
-using PdfSharpCore.Internal;
-using PdfSharpCore.Pdf.Advanced;
-using PdfSharpCore.Pdf.Internal;
-using PdfSharpCore.Pdf.IO.enums;
 
 namespace PdfSharpCore.Pdf.IO
 {
@@ -372,6 +373,17 @@ namespace PdfSharpCore.Pdf.IO
 
             if (!(value is PdfReference reference))
             {
+                throw new InvalidOperationException("Cannot retrieve stream length.");
+            }
+
+            if (reference.Value != null)
+            {
+                if (reference.Value is PdfIntegerObject intValue)
+                {
+                    
+                    dict.Elements["/Length"] = new PdfInteger(intValue.Value);
+                    return intValue.Value;
+                }
                 throw new InvalidOperationException("Cannot retrieve stream length.");
             }
 
@@ -934,6 +946,7 @@ namespace PdfSharpCore.Pdf.IO
             objectStreamStream.ReadReferences(_document._irefTable);
         }
 
+
         /// <summary>
         /// Reads the compressed object with the specified index in the object stream
         /// of the object with the specified object id.
@@ -1030,6 +1043,58 @@ namespace PdfSharpCore.Pdf.IO
             _lexer.Position = offset;
             PdfObject obj = ReadObject(null, objectID, false, true);
             return obj.Reference;
+        }
+
+        public void ReadAllObjectStreamsAndTheirReferences()
+        {
+            for (int idx = 0; idx < _document._irefTable.CompressedObjects.Count; idx++)
+            {
+                PdfObjectID objectID = _document._irefTable.CompressedObjects[idx];
+
+                PdfReference iref = _document._irefTable[objectID];
+
+                PdfObjectStream objectStream = ReadObjectStream(iref);
+
+                if (objectStream != null)
+                {
+                    objectStream.ReadReferencesAndObjects(objectStream, _document._irefTable);
+                }
+            }
+        }
+
+        PdfObjectStream ReadObjectStream(PdfReference iref)
+        {
+            PdfObjectStream objectStream = null;
+            if (iref.Value == null)
+            {
+                try
+                {
+                    Debug.Assert(_document._irefTable.Contains(iref.ObjectID));
+                    PdfDictionary pdfObject = (PdfDictionary)ReadObject(null, iref.ObjectID, false, false);
+                    objectStream = new PdfObjectStream(pdfObject);
+                    Debug.Assert(objectStream.Reference == iref);
+                    // objectStream.Reference = iref; Superfluous, see Assert in line before.
+                    Debug.Assert(objectStream.Reference.Value != null, "Something went wrong.");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    throw;
+                }
+            }
+            else
+            {
+                objectStream = iref.Value as PdfObjectStream;
+                if (objectStream == null)
+                {
+                    Debug.Assert(((PdfDictionary)iref.Value).Elements.GetName("/Type") == "/ObjStm");
+                    objectStream = new PdfObjectStream((PdfDictionary)iref.Value);
+                    Debug.Assert(objectStream.Reference == iref);
+                    // objectStream.Reference = iref; Superfluous, see Assert in line before.
+                    Debug.Assert(objectStream.Reference.Value != null, "Something went wrong.");
+                }
+            }
+            return objectStream;
         }
 
         /// <summary>
@@ -1424,7 +1489,8 @@ namespace PdfSharpCore.Pdf.IO
                             break;
 
                         case 2:
-                            // Nothing to do yet.
+                            // compressed indirect object inside an object stream
+                            xrefTable.AddCompressedObject(new PdfObjectID((int)item.Field2));
                             break;
                     }
                 }

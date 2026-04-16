@@ -51,6 +51,7 @@ namespace PdfSharpCore.Pdf.Advanced
         /// Represents the relation between PdfObjectID and PdfReference for a PdfDocument.
         /// </summary>
         public Dictionary<PdfObjectID, PdfReference> ObjectTable = new Dictionary<PdfObjectID, PdfReference>();
+        public List<PdfObjectID> CompressedObjects = new List<PdfObjectID>();
 
         internal bool IsUnderConstruction
         {
@@ -58,6 +59,12 @@ namespace PdfSharpCore.Pdf.Advanced
             set { _isUnderConstruction = value; }
         }
         bool _isUnderConstruction;
+
+        public void AddCompressedObject(PdfObjectID pdfObjectID)
+        {
+            if (!CompressedObjects.Contains(pdfObjectID))
+                CompressedObjects.Add(pdfObjectID);
+        }
 
         /// <summary>
         /// Adds a cross reference entry to the table. Used when parsing the trailer.
