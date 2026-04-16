@@ -456,6 +456,10 @@ namespace PdfSharpCore.Pdf.IO
                     }
                 }
 
+                // added experimental compressed objects streams support
+                if (accuracy == PdfReadAccuracy.Lazy)
+                    parser.ReadAllObjectStreamsAndTheirReferences();
+
                 PdfReference[] irefs2 = document._irefTable.AllReferences;
                 int count2 = irefs2.Length;
 

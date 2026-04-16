@@ -70,6 +70,37 @@ namespace PdfSharpCore.Pdf.Advanced
             _header = parser.ReadObjectStreamHeader(n, first);
         }
 
+
+
+        /// <summary>
+        /// Reads the compressed object with the specified index.
+        /// </summary>
+        internal void ReadReferencesAndObjects(PdfObjectStream objectStream, PdfCrossReferenceTable xrefTable)
+        {
+            ////// Create parser for stream.
+            ////Parser parser = new Parser(_document, new MemoryStream(Stream.Value));
+            for (int idx = 0; idx < _header.Length; idx++)
+            {
+                int objectNumber = _header[idx][0];
+                int offset = _header[idx][1];
+
+                PdfObjectID objectID = new PdfObjectID(objectNumber);
+
+                // HACK: -1 indicates compressed object.
+                PdfReference iref = ReadCompressedObject(idx);
+                ////iref.ObjectID = objectID;
+                ////iref.Value = xrefStream;
+                if (!xrefTable.Contains(iref.ObjectID))
+                {
+                    xrefTable.Add(iref);
+                }
+                else
+                {
+                    GetType();
+                }
+            }
+        }
+
         /// <summary>
         /// Reads the compressed object with the specified index.
         /// </summary>
