@@ -80,8 +80,10 @@ namespace PdfSharpCore.Test.Helpers
 
             // Allow for subtle differences due to cross-platform rendering of the PDF fonts
             actual.ColorFuzz = new Percentage(fuzzPct);
-            var diffVal = actual.Compare(expected, ErrorMetric.Absolute, diffImg);
-            
+            //var diffVal = actual.Compare(expected, ErrorMetric.Absolute, diffImg);
+            var diffVal = actual.Compare(expected, ErrorMetric.Absolute);
+            diffImg = new MagickImage(expected);
+
             if (diffVal > 0 && outputPath != null && filePrefix != null)
             {
                 WriteImage(diffImg, outputPath, $"{filePrefix}_diff");

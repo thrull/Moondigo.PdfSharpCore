@@ -262,3 +262,4 @@ __pycache__/
 
 # OSX
 .DS_Store
+/PdfSharpCore.Test/Assets/dok.pdf

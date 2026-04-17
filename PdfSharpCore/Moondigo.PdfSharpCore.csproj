@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netcoreapp3.1;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net5.0;net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
     <CheckEolTargetFramework>false</CheckEolTargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Authors>Stefan Steiger and Contributors (forked)</Authors>
+    <Authors>Stefan Steiger and Contributors (forked by Moondigo)</Authors>
     <Description>PdfSharp for .NET Core (forked by Moondigo)
 
 PdfSharpCore is a partial port of PdfSharp.Xamarin for .NET Core Additionally MigraDoc has been ported as well (from version 1.32). Images have been implemented with ImageSharp from https://www.nuget.org/packages/SixLabors.ImageSharp</Description>
@@ -13,7 +13,9 @@ PdfSharpCore is a partial port of PdfSharp.Xamarin for .NET Core Additionally Mi
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/thrull/Moondigo.PdfSharpCore</PackageProjectUrl>
     <RepositoryUrl>https://github.com/thrull/Moondigo.PdfSharpCore</RepositoryUrl>
-    <PackageReleaseNotes>PdfSharpCore (forked by Moondigo) is a partial port of PdfSharp.Xamarin for .NET Core Additionally MigraDoc has been ported as well (from version 1.32)</PackageReleaseNotes>
+    <PackageReleaseNotes>PdfSharpCore (forked by Moondigo) 
+	- 1.0.6: Dependancies updated. Droppped support for older .net frameworks version and added 9.0 (no significant code changes, but testing against 9.0)
+	- 1.0.5: Added experimental compressed objects streams support that can actually work (/Type ObjStm) - for accuracy Lazy. Original library caused problems when particular stream /Length dictionary directed to object reference like "10 0 R" and that object is in compressed object stream (/Type ObjStm).</PackageReleaseNotes>
     <PackageTags>NuggetV1.0.0 (8ea343d5898342a563b9d4df2d67e27aaea9ac01)</PackageTags>
     <summary>Moondigo.PdfSharp for .NET Core</summary>
     <IsTrimmable>true</IsTrimmable>
@@ -27,6 +29,7 @@ PdfSharpCore is a partial port of PdfSharp.Xamarin for .NET Core Additionally Mi
 	<PropertyGroup>
         <!--skip warning due to skiplabours.fonts being beta -->
 		<NoWarn>NU5104</NoWarn>
+		<Version>1.0.5</Version>
 	</PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -48,7 +51,7 @@ PdfSharpCore is a partial port of PdfSharp.Xamarin for .NET Core Additionally Mi
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="SharpZipLib" Version="1.4.2" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="2.1.10" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="2.1.13" />
     <PackageReference Include="SixLabors.Fonts" Version="1.0.0" />
     <PackageReference Include="System.Security.Cryptography.Pkcs" Version="6.0.5" />
   </ItemGroup>
