@@ -60,7 +60,7 @@ resources:
 - name: source
   type: git
   source:
-    uri: https://github.com/ststeiger/PdfSharpCore.git
+    uri: https://github.com/thrull/Moondigo.PdfSharpCore.git
     branch: master
 
 - name: version

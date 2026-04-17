@@ -13,6 +13,7 @@ Image support has been implemented with [SixLabors.ImageSharp](https://github.co
 This fork added:
  - lesser "accuracy level" (Pdf.IO.enums.PdfReadAccuracy.Lazy - for opening some broken PDFs. Final solution might be pushed to original branch.
  - added preliminary support for PDF Signatures validation (PdfDocument.IsSigned, PdfDocument.Signatures)
+ - added experimental compressed objects streams support that can actually work (/Type ObjStm) -> solved a situation when stream Length was referencing to an object in compressed Object stream (available in Lazy acuracy level).
 
 ## Table of Contents
 
