@@ -1,6 +1,6 @@
-dotnet clean -c Release
+dotnet clean -c Debug
 
 $repositoryUrl = "https://github.com/$env:GITHUB_REPOSITORY"
 
 # Building for a specific framework.
-dotnet build -c Release /p:RepositoryUrl=$repositoryUrl
+dotnet build -c Debug /p:RepositoryUrl=$repositoryUrl
