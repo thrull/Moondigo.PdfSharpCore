@@ -1279,7 +1279,7 @@ namespace PdfSharpCore.Pdf.IO
                     // The parsed integer is the object id of the cross-refernece stream.
                     return ReadXRefStream(xrefTable);
                 }
-                catch (PdfReaderException ex)
+                catch (PdfReaderException)
                 {
                     // try to find xref symbol around end of the file
                     if (symbol == Symbol.Integer && accuracy == PdfReadAccuracy.Lazy)

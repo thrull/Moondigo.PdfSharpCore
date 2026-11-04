@@ -21,21 +21,28 @@ namespace PdfSharpCore.Utils
 
         protected override IImageSource FromBinaryImpl(string name, Func<byte[]> imageSource, int? quality = 75)
         {
-            var image = Image.Load<TPixel>(imageSource.Invoke(), out IImageFormat imgFormat);
+            var data = imageSource.Invoke();
+            var imgFormat = Image.DetectFormat(data);
+            var image = Image.Load<TPixel>(data);
             return new ImageSharpImageSourceImpl<TPixel>(name, image, (int)quality, imgFormat is PngFormat);
         }
 
         protected override IImageSource FromFileImpl(string path, int? quality = 75)
         {
-            var image = Image.Load<TPixel>(path, out IImageFormat imgFormat);
+            var imgFormat = Image.DetectFormat(path);
+            var image = Image.Load<TPixel>(path);
             return new ImageSharpImageSourceImpl<TPixel>(path, image, (int) quality, imgFormat is PngFormat);
         }
 
         protected override IImageSource FromStreamImpl(string name, Func<Stream> imageStream, int? quality = 75)
         {
             using (var stream = imageStream.Invoke())
+            using (var buffer = new MemoryStream())
             {
-                var image = Image.Load<TPixel>(stream, out IImageFormat imgFormat);
+                stream.CopyTo(buffer);
+                var data = buffer.ToArray();
+                var imgFormat = Image.DetectFormat(data);
+                var image = Image.Load<TPixel>(data);
                 return new ImageSharpImageSourceImpl<TPixel>(name, image, (int)quality, imgFormat is PngFormat);
             }
         }
@@ -69,7 +76,7 @@ namespace PdfSharpCore.Utils
             }
             public void SaveAsPdfBitmap(MemoryStream ms)
             {
-                BmpEncoder bmp = new BmpEncoder { BitsPerPixel = BmpBitsPerPixel.Pixel32 };
+                BmpEncoder bmp = new BmpEncoder { BitsPerPixel = BmpBitsPerPixel.Bit32 };
                 Image.Save(ms, bmp);
             }
         }
