@@ -1,0 +1,2 @@
+Identyfikator problemu,Opis,Stan,Ważność,Punkty scenariusza,Ścieżka projektu,Rodzaj lokalizacji,ŚCIEŻKA,Wiersz,Kolumna,Identyfikator zdarzenia,Link pomocy,Nazwa zestawu,Wersja zestawu,Klucz publiczny zestawu,Fragment kodu
+Pkg.0001,Project references an upgraded package,Active,Information,0,PdfSharpCore\Moondigo.PdfSharpCore.csproj,File,PdfSharpCore\Moondigo.PdfSharpCore.csproj,,,SixLabors.ImageSharp 4.1.3,,,,,"SixLabors.ImageSharp, 4.1.3"

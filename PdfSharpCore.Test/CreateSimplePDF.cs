@@ -7,6 +7,7 @@ using PdfSharpCore.Pdf;
 using PdfSharpCore.Test.Helpers;
 using PdfSharpCore.Utils;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using Xunit;
@@ -88,7 +89,9 @@ namespace PdfSharpCore.Test
             var renderer = XGraphics.FromPdfPage(pageNewRenderer);
 
             // Load image for ImageSharp and apply a simple mutation:
-            var image = Image.Load<Rgb24>(PathHelper.GetInstance().GetAssetPath("lenna.png"), out var format);
+            var imagePath = PathHelper.GetInstance().GetAssetPath("lenna.png");
+            var format = Image.DetectFormat(imagePath);
+            var image = Image.Load<Rgb24>(imagePath);
             image.Mutate(ctx => ctx.Grayscale());
 
             // create XImage from that same ImageSharp image:
